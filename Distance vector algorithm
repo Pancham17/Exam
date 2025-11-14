@@ -1,0 +1,43 @@
+
+## Distance Vector Routing Algorithm Mechanism 📡
+
+The Distance Vector Routing algorithm is an **iterative and asynchronous** process. Every router maintains a *distance vector*—a list of all known destinations, the cost (distance) to reach them, and the next-hop router to use.
+
+### 1. How Routing Tables are Updated (The Bellman-Ford Equation)
+
+The core principle of DVR is based on the **Bellman-Ford Algorithm**. Each router ($X$) updates its routing table (its distance vector) by receiving distance vectors from its immediate neighbors ($V$) and applying the following equation:
+
+$$D_X(Y) \leftarrow \min_{V} \{ c(X, V) + D_V(Y) \}$$
+
+Where:
+* $D_X(Y)$: The current shortest distance (cost) from router $X$ to destination $Y$.
+* $\min_{V}$: The minimum is taken over all neighbors $V$ of router $X$.
+* $c(X, V)$: The cost of the direct link between router $X$ and its neighbor $V$.
+* $D_V(Y)$: The distance (cost) that neighbor $V$ advertises as its shortest distance to destination $Y$.
+
+The router $X$ checks the cost of reaching destination $Y$ through **every one of its neighbors** ($V$). The lowest calculated cost becomes the new entry in the routing table for destination $Y$, and the neighbor ($V$) that advertised the winning path becomes the new **next-hop** for that destination.
+
+### 2. What Information is Exchanged? (The Distance Vector)
+
+Routers running the DVR algorithm exchange information that consists of **partial, summarized network information**.
+
+* **The entire Distance Vector (Routing Table):** Each router sends its **complete routing table**—a list of every destination it knows about, along with the calculated cost (distance) to reach that destination.
+* **Exchange is only with Neighbors:** This information is exchanged **only with directly connected neighbors**, not with every router in the network. For instance, in RIP, this distance is measured in **hop counts**, and a destination with a cost of 16 is considered infinite/unreachable.
+
+### 3. How Often Does This Exchange Occur? (Periodic Updates)
+
+The exchange of distance vectors (routing tables) takes place **periodically** at **regular, fixed intervals**, regardless of whether the network topology has changed or not.
+
+* For instance, the **RIP** protocol, a classic example of Distance Vector Routing, sends its routing table updates every **30 seconds**.
+
+This periodic exchange of the full table is a key differentiator from Link State Routing (like OSPF), which only sends updates when a change occurs (**event-driven**).
+
+***
+
+## Limitations of Distance Vector Routing
+
+While simple, the periodic, full-table exchange mechanism of DVR leads to some major drawbacks:
+
+* **Slow Convergence:** The main issue is the **Count to Infinity** problem, especially when a link cost increases or a route fails (often called **"bad news travels slowly"**). It takes many update cycles for the correct distance to propagate through the network.
+* **Routing Loops:** DVR is susceptible to temporary routing loops during the convergence period.
+* **Limited Metric:** Protocols like RIP are limited to simple hop counts, preventing path selection based on better metrics like bandwidth or latency.
