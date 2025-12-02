@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Store Factorial</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Store Factorial in Database</h2>
+
+<form action="store.php" method="post">
+    Enter Number: 
+    <input type="number" name="num" required>
+    <br><br>
+    <input type="submit" value="Save">
+</form>
+
+</body>
+</html>
