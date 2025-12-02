@@ -1,0 +1,21 @@
+<?php
+$conn = mysqli_connect("localhost", "root", "", "mydatabase");
+
+$num = $_POST['num'];
+$fact = 1;
+
+for($i = 1; $i <= $num; $i++) {
+    $fact = $fact * $i;
+}
+
+$sql = "INSERT INTO mytable(num, fact) VALUES('$num', '$fact')";
+
+if(mysqli_query($conn, $sql)) {
+    echo "Record Inserted Successfully<br>";
+} else {
+    echo "Error";
+}
+
+echo "<br>Number: $num";
+echo "<br>Factorial: $fact";
+?>
