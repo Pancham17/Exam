@@ -1,0 +1,24 @@
+<?php
+$conn = mysqli_connect("localhost", "root", "", "mydatabase");
+
+$result = mysqli_query($conn, "SELECT * FROM mytable");
+
+echo "<h2>Stored Records</h2>";
+
+echo "<table border='1'>
+<tr>
+<th>ID</th>
+<th>Number</th>
+<th>Factorial</th>
+</tr>";
+
+while($row = mysqli_fetch_array($result)) {
+    echo "<tr>";
+    echo "<td>".$row['id']."</td>";
+    echo "<td>".$row['num']."</td>";
+    echo "<td>".$row['fact']."</td>";
+    echo "</tr>";
+}
+
+echo "</table>";
+?>
